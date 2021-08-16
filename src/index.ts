@@ -1,3 +1,5 @@
+import {PSKCallbackNegotation} from "tls";
+
 console.log('Hello Typescript')
 
 let a = 1 + 2
@@ -37,3 +39,44 @@ console.log(h.b);
 
 let j: { [b: number]: string } = {10: 'ten'} // Object with index signature
 let danger: Object = {} // The compiler complains about this one and IT MUST be AVOIDED
+
+type Cat = {name: string, purrs: boolean}
+type Dog = {name: string, barks: boolean, wags: boolean}
+type CatOrDogOrBoth = Cat | Dog
+type CatAndDog = Cat & Dog
+
+let cat: CatOrDogOrBoth = {
+    name: 'sgnapsi',
+    purrs: true
+}
+
+let dog: CatOrDogOrBoth = {
+    name: 'doggy',
+    purrs: false,
+    barks: true
+}
+
+let monster: CatAndDog = {
+    barks: true,
+    purrs: false,
+    name: 'monster',
+    wags: true
+}
+
+function addItemsToArray() {
+    const values = [];
+    values.push('text')
+    values.push(true)
+    return values
+}
+
+let array = addItemsToArray();
+array.push(10); // A number cannot be assigned to a type 'string | boolean'. When the type is outside the scope it was defined into, typescript makes it final
+
+const singleton: [number] = [1]
+const pair: [number, number] = [1, 2]
+const triple: [number, number, number] = [1, 2, 3]
+const tuple: [number, ...number[]] = [1, 2, 3, 4, 5] // n-elements tuple with one mandatory element
+
+type Color = string
+const colorPalette: [boolean, string, ...Color[]] = [true, 'Custom Color', '#FFFFFF']
