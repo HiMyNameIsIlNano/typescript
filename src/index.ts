@@ -71,7 +71,7 @@ function addItemsToArray() {
 }
 
 let array = addItemsToArray();
-array.push(10); // A number cannot be assigned to a type 'string | boolean'. When the type is outside the scope it was defined into, typescript makes it final
+// array.push(10); // A number cannot be assigned to a type 'string | boolean'. When the type is outside the scope it was defined into, typescript makes it final
 
 const singleton: [number] = [1]
 const pair: [number, number] = [1, 2]
@@ -80,3 +80,19 @@ const tuple: [number, ...number[]] = [1, 2, 3, 4, 5] // n-elements tuple with on
 
 type Color = string
 const colorPalette: [boolean, string, ...Color[]] = [true, 'Custom Color', '#FFFFFF']
+
+const notmodifyable: readonly number[] = [1, 2, 3];
+console.log(notmodifyable)
+
+// notmodifyable.push(6); // the property push does not exist on type readonly
+console.log(notmodifyable.concat(6)) // A new instance is created here
+
+function doNotReturnAnything() {
+    const localVar: number = 4
+}
+
+function neverEnding(): never {
+    while (true) {
+        doNotReturnAnything()
+    }
+}
