@@ -7,6 +7,7 @@
     "rules": {
         "semicolon": false,
         "trailing-comma": false
+        // "no-invalid-this": true
     },
     "rulesDirectory": []
 }

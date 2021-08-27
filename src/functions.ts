@@ -42,3 +42,21 @@ function varArgsParameters (...numbers: number[]): number {
 }
 console.log('varArgsParameters: ' + varArgsParameters(1, 2, 3))
 console.log('varArgsParameters: ' + varArgsParameters(10, 20, 30, 40))
+
+let x = {
+    a() {
+        return this // this is not allowed outside of class bodies (see: tslint.json `no-invalid-this`)
+    }
+}
+const thees = x.a(); // thees is of type `a()`
+console.log(thees) // `this` is in this case the function a() of x
+
+const that = x.a
+console.log(that()) // that is of type `() => a()` therefore the value returned by the function is undefined
+
+function fancyDate() {
+    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+}
+
+console.log(`Fancy Date: ${fancyDate.call(new Date())}`)
+console.log(fancyDate()) // in this case this is null because nothing is passed to the function
