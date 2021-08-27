@@ -1,5 +1,3 @@
-import {PSKCallbackNegotation} from "tls";
-
 console.log('Hello Typescript')
 
 let a = 1 + 2
