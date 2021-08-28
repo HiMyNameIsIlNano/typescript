@@ -1,6 +1,7 @@
 function f1(a: number, b: number) {
     return a + b
 }
+
 const r1 = f1(0, 1)
 
 // Non-arrow functions are forbidden
@@ -37,9 +38,10 @@ const fWithDefault = (a: number, b: number = 0) => a + b
 console.log('fWithDefault: ' + fWithDefault(5)) // 5
 console.log('fWithDefault: ' + fWithDefault(5, 1)) // 6
 
-function varArgsParameters (...numbers: number[]): number {
+function varArgsParameters(...numbers: number[]): number {
     return numbers.reduce((total, n) => total + n, 0)
 }
+
 console.log('varArgsParameters: ' + varArgsParameters(1, 2, 3))
 console.log('varArgsParameters: ' + varArgsParameters(10, 20, 30, 40))
 
@@ -55,8 +57,32 @@ const that = x.a
 console.log(that()) // that is of type `() => a()` therefore the value returned by the function is undefined
 
 function fancyDate() {
-    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}` // In this case the compiler complains that 'this' is of type any
 }
 
 console.log(`Fancy Date: ${fancyDate.call(new Date())}`)
-console.log(fancyDate()) // in this case this is null because nothing is passed to the function
+
+// console.log(fancyDate()) // in this case this is null because nothing is passed to the function
+
+function fancyDateWithExplicitThis(this: Date) {
+    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+}
+
+console.log(`Fancy Date with call: ${fancyDateWithExplicitThis.call(new Date())}`)
+console.log(`Fancy Date with apply: ${fancyDateWithExplicitThis.apply(new Date())}`)
+
+function* fibonacci() {
+    let a = 0
+    let b = 1
+    // const c = 1
+    while (1) {
+        yield a; // This allows the generator to generate a new value. Yield b would have worked anyway. Yield c would have never worked
+        [a, b] = [b, a + b] // Assign b to a, and assign b to a + b
+    }
+}
+const generator = fibonacci();
+console.log(`Next fibonacci value: ${generator.next().value}`)
+console.log(`Next fibonacci value: ${generator.next().value}`)
+console.log(`Next fibonacci value: ${generator.next().value}`)
+console.log(`Next fibonacci value: ${generator.next().value}`)
+console.log(`Next fibonacci value: ${generator.next().value}`)
