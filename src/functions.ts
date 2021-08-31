@@ -86,3 +86,21 @@ console.log(`Next fibonacci value: ${generator.next().value}`)
 console.log(`Next fibonacci value: ${generator.next().value}`)
 console.log(`Next fibonacci value: ${generator.next().value}`)
 console.log(`Next fibonacci value: ${generator.next().value}`)
+
+let numbers = {
+    *[Symbol.iterator]() {
+        for (let n = 0; n <  5; n++) {
+            yield n;
+        }
+    }
+}
+// Using an iterator
+for (const n of numbers) {
+    console.log(`current number: ${n}`)
+}
+
+const allNumbers = [...numbers];
+console.log(`allNumbers: ${allNumbers}`)
+
+const [zero, one, ...rest] = numbers
+console.log(`zero: ${zero}, one: ${one}, rest: ${rest}`)
