@@ -104,3 +104,11 @@ console.log(`allNumbers: ${allNumbers}`)
 
 const [zero, one, ...rest] = numbers
 console.log(`zero: ${zero}, one: ${one}, rest: ${rest}`)
+
+// This is a function defined as type and then implemented following the function signature
+type Sum = (n: number, addend?: number) => number
+let increment: Sum = (n, addend = 1) => {
+    return n + addend;
+}
+console.log(`Increment 5 by 1: ${increment(5)}`)
+console.log(`Increment 5 by 2: ${increment(5, 2)}`)
