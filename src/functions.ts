@@ -112,3 +112,25 @@ let increment: Sum = (n, addend = 1) => {
 }
 console.log(`Increment 5 by 1: ${increment(5)}`)
 console.log(`Increment 5 by 2: ${increment(5, 2)}`)
+
+type Reserve = {
+    (from: Date, to: Date, destination: string): number
+    (from: Date, destination: string): number
+}
+
+// In order for the problem to be fixed we have to compose the signature by hand
+let twoWayReservationOk: Reserve = (from: Date, toOrDestination: Date | string, destination?: string) => {
+    if (toOrDestination instanceof Date) {
+        // Roundtrip
+    } else if (typeof toOrDestination === 'string') {
+        // single leg trip
+    }
+    return 100
+};
+
+function createDummy(dummy: 'a'): number
+function createDummy(dummy: 'b'): number
+function createDummy(dummy: 'c'): number
+function createDummy(dummy: string): number {
+    return 10;
+}
