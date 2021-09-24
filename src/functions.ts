@@ -134,3 +134,75 @@ function createDummy(dummy: 'c'): number
 function createDummy(dummy: string): number {
     return 10;
 }
+
+type name = {
+    firstName: string
+}
+let Al: name = {firstName: 'Al'}
+let John: name = {firstName: 'John'}
+let Jack: name = {firstName: 'Jack'}
+let names = [
+    {firstName: 'Al'},
+    {firstName: 'John'},
+    {firstName: 'Jack'}
+]
+
+let namesInline: {firstName: string} [] = [
+    {firstName: 'Al'},
+    {firstName: 'John'},
+    {firstName: 'Jack'}
+]
+
+type Filter = {
+    (arr: number[], f: (item: number) => boolean): number[]
+    (arr: string[], f: (item: string) => boolean): string[]
+    (arr: object[], f: (item: object) => boolean): object[]
+}
+
+let filter: Filter = (array: (number | string | object)[], f: ((item: number) => boolean) | ((item: string) => boolean) | ((item: object) => boolean)): (string | number | object)[] => {
+    const filtered = []
+    for (const item of array) {
+        if (f(item)) {
+            filtered.push(item)
+        }
+    }
+    return filtered
+}
+let result = filter(namesInline, _ => _.firstName.startsWith('A'))
+console.log(result)
+
+let result2 = filter(names, _ => _.firstName.startsWith('A'))
+console.log(result2)
+
+type GenericFilter = {
+    <T>(arr: T[], f: (item: T) => boolean): T[]
+}
+let genericFilter: GenericFilter = (array, f) => {
+    const filtered = []
+    for (const item of array) {
+        if (f(item)) {
+            filtered.push(item)
+        }
+    }
+    return filtered
+}
+let genericFilterResult = genericFilter(names, _ => _.firstName.startsWith('A'))
+console.log(`Generic Filter Result: ${genericFilterResult}`)
+
+let genericFilterResult2 = genericFilter([1, 2, 3, 4], _ => _ > 2)
+console.log(`Generic Filter Result: ${genericFilterResult2}`)
+
+type AnotherGenericFilter<T> = {
+    (arr: T[], f: (item: T) => boolean): T[]
+}
+let stringGenericFilter: AnotherGenericFilter<string> = (array, f) => {
+    const filtered = []
+    for (const item of array) {
+        if (f(item)) {
+            filtered.push(item.toLowerCase())
+        }
+    }
+    return filtered
+}
+let genericFilterResult3 = stringGenericFilter(['A', 'B', 'C', 'D'], _ => _ === 'A')
+console.log(`String Filter Result: ${genericFilterResult3}`)
