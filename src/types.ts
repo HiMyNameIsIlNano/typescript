@@ -38,6 +38,13 @@ console.log(h.b);
 let j: { [b: number]: string } = {10: 'ten'} // Object with index signature
 let danger: Object = {} // The compiler complains about this one and IT MUST be AVOIDED
 
+type age = number
+type person = {name: string, age: age}
+const person: person = {
+    name: 'Jack',
+    age: 20
+}
+
 type Cat = {name: string, purrs: boolean}
 type Dog = {name: string, barks: boolean, wags: boolean}
 type CatOrDogOrBoth = Cat | Dog
