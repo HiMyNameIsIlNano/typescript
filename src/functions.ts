@@ -206,3 +206,37 @@ let stringGenericFilter: AnotherGenericFilter<string> = (array, f) => {
 }
 let genericFilterResult3 = stringGenericFilter(['A', 'B', 'C', 'D'], _ => _ === 'A')
 console.log(`String Filter Result: ${genericFilterResult3}`)
+
+type PayloadVO = {
+    id: number,
+    buttonId: string
+}
+type MyEvent<T> = {
+    description: string,
+    payload: T
+}
+type EventWithPayload = MyEvent<PayloadVO>
+
+type RandomVO = {
+    id: number,
+    generatedNumber: number
+}
+let randomNumberEvent: MyEvent<RandomVO> = {
+    description: 'A newly generated number',
+    payload: {
+        id: 1,
+        generatedNumber: 20
+    }
+}
+
+function printEvent<T>(event: MyEvent<T>): void {
+    console.log(`The following event was generated: ${event.description} and payload ${event.payload}`)
+}
+// In this case the type T is bound to RandomVO because the payload is of type RandomVO
+printEvent(randomNumberEvent)
+
+// In this case the type T is bound to string because the payload is of type string
+printEvent({
+    description: 'Another random event',
+    payload: 'UUID12345'
+})
