@@ -1,4 +1,4 @@
-function f1(a: number, b: number) {
+:wqfunction f1(a: number, b: number) {
     return a + b
 }
 
@@ -207,6 +207,7 @@ let stringGenericFilter: AnotherGenericFilter<string> = (array, f) => {
 let genericFilterResult3 = stringGenericFilter(['A', 'B', 'C', 'D'], _ => _ === 'A')
 console.log(`String Filter Result: ${genericFilterResult3}`)
 
+
 type PayloadVO = {
     id: number,
     buttonId: string
@@ -240,3 +241,38 @@ printEvent({
     description: 'Another random event',
     payload: 'UUID12345'
 })
+
+type payload<T> = {
+    data: T
+}
+type stringPayload = payload<string>
+type numberPayload = payload<number>
+
+function inspect<T extends payload<unknown>>(element: T): void {
+    console.log(element.data)
+}
+
+const stringPayloadInstance: stringPayload = {
+    data: 'Foo'
+}
+const numberPayloadInstance: numberPayload = {
+    data: 10
+}
+
+inspect(stringPayloadInstance)
+inspect(numberPayloadInstance)
+
+type item = {
+    id: number
+}
+type amount = {
+    amount: number
+}
+function inspectWithIntersection<T extends item & amount>(element: T): void {
+    console.log(`ID: ${element.id} and AMOUNT: ${element.amount}`)
+}
+let product: item & amount = {
+    id: 15,
+    amount: 10
+}
+inspectWithIntersection(product)
