@@ -1,4 +1,4 @@
-:wqfunction f1(a: number, b: number) {
+function f1(a: number, b: number) {
     return a + b
 }
 
@@ -212,10 +212,11 @@ type PayloadVO = {
     id: number,
     buttonId: string
 }
-type MyEvent<T> = {
+type MyEvent<T = PayloadVO> = {
     description: string,
     payload: T
 }
+// Warning having assigned a default value to the payload, it is not necessary to use the diamond annotation anymore
 type EventWithPayload = MyEvent<PayloadVO>
 
 type RandomVO = {
@@ -276,3 +277,54 @@ let product: item & amount = {
     amount: 10
 }
 inspectWithIntersection(product)
+
+type ReserveApi = {
+    (from: Date, to: Date, destination: string): number
+    (from: Date, destination: string): number
+    (destination: string): number
+}
+
+let reserveApiImpl: ReserveApi = (fromOrDestination: Date | string, toOrDestination?: Date | string, destination?: string) => {
+    return 10;
+}
+
+// Assignment
+type comparator<T, U = boolean> = (value: T, expected: T) => U
+let compareNumbers: comparator<number> = (v1, v2) => {
+    return v1 === v2
+}
+let compareStrings: comparator<string> = (v1, v2) => {
+    return v1 === v2
+}
+
+const is = <T>(value: T, expected: T) => {
+    return value === expected
+}
+function is1<T>(value: T, expected: T): boolean {
+    return value === expected
+}
+function isNAry<T>(...args: T[]): boolean {
+    const length = args.length;
+    const expected = args[length - 1]
+    for (let i = length - 2; i >= 0; i--) {
+        if (args[i] !== expected) {
+            return false
+        }
+    }
+    return true;
+}
+
+console.log(`asd is test: ${is('asd', 'test')}`)
+console.log(`asd is asd: ${is('asd', 'asd')}`)
+console.log(`asd is empty: ${is('asd', '')}`)
+console.log(`2 is 10: ${is(2, 10)}`)
+console.log(`2 is 2: ${is(2, 2)}`)
+// Expected to be wrong
+console.log(`2 is asd: ${is(2, 'asd')}`)
+console.log(`2 is 2: ${isNAry(2, 2)}`)
+console.log(`2, 2 and 3: ${isNAry(2, 2, 3)}`)
+// Expected to be wrong
+console.log(`2, 2 and 3: ${isNAry(2, 2, 'asd')}`)
+
+const numbers: number[] = [1, 2, 3]
+console.log(`length: ${numbers.length}, numbers[2]: ${numbers[numbers.length - 1]}, numbers[1]: ${numbers[numbers.length - 2]}`)
