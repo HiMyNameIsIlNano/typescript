@@ -30,7 +30,7 @@ doSomething(7)*/
 // console.log(c + e)
 
 let h0: object = { b: 'value' }
-// onsole.log(h0.b) // The property b does not exist on type object
+// console.log(h0.b) // The property b does not exist on type object
 
 let h: { b: string, c?: number, d: boolean } = {b: 'value', d: true}
 console.log(h.b);
